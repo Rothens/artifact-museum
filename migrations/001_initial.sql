@@ -47,6 +47,10 @@ CREATE TABLE IF NOT EXISTS item_records (
 
 CREATE INDEX IF NOT EXISTS idx_items_code_def ON item_records(code_definition_id);
 CREATE INDEX IF NOT EXISTS idx_items_public ON item_records(is_public);
+-- Speeds up ORDER BY collected_at DESC on all list queries
+CREATE INDEX IF NOT EXISTS idx_items_collected_at ON item_records(collected_at);
+-- Covers the common pattern: all items for a code, newest first
+CREATE INDEX IF NOT EXISTS idx_items_code_collected ON item_records(code_definition_id, collected_at);
 
 CREATE TABLE IF NOT EXISTS page_views (
   id          INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -56,3 +60,5 @@ CREATE TABLE IF NOT EXISTS page_views (
 );
 
 CREATE INDEX IF NOT EXISTS idx_views_item ON page_views(item_id);
+-- Allows time-range analytics queries without a full table scan
+CREATE INDEX IF NOT EXISTS idx_views_viewed_at ON page_views(viewed_at);
