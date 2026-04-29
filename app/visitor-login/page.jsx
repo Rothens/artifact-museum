@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { getLocale } from "../../lib/locale.js";
 import { getTranslations } from "../../lib/i18n.js";
+import { verifyVisitorPassword, makeVisitorToken } from "../../lib/auth.js";
 
 export const dynamic = "force-dynamic";
 
@@ -14,17 +15,16 @@ export default async function VisitorLoginPage({ searchParams }) {
   async function enter(formData) {
     "use server";
     const password = formData.get("password") ?? "";
-    const expected = process.env.VISITOR_PASSWORD ?? "";
-    if (password === expected) {
+    if (verifyVisitorPassword(password)) {
       const cookieStore = await cookies();
       cookieStore.set({
         name: "am_visitor",
-        value: expected,
+        value: makeVisitorToken(),
         httpOnly: true,
         sameSite: "lax",
         path: "/",
         secure: process.env.NODE_ENV === "production",
-        maxAge: 60 * 60 * 24 * 30, // 30 days
+        maxAge: 60 * 60 * 24 * 30,
       });
       redirect(next);
     } else {

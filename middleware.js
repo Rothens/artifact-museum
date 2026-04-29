@@ -5,13 +5,13 @@ const VISITOR_COOKIE = "am_visitor";
 const SIGNED_VALUE = "authenticated";
 
 // Minimal HMAC verify that runs in the Edge Runtime (no Node crypto module)
-async function verifyEdge(signed, secret) {
+async function verifyEdge(signed, secret, expectedValue = SIGNED_VALUE) {
   if (!signed) return false;
   const lastDot = signed.lastIndexOf(".");
   if (lastDot === -1) return false;
   const value = signed.slice(0, lastDot);
   const mac = signed.slice(lastDot + 1);
-  if (value !== SIGNED_VALUE) return false;
+  if (value !== expectedValue) return false;
 
   const enc = new TextEncoder();
   const key = await crypto.subtle.importKey(
@@ -64,7 +64,6 @@ export async function middleware(request) {
   // ------------------------------------------------------------------
   const visitorPassword = process.env.VISITOR_PASSWORD || "";
   if (visitorPassword) {
-    // These paths are always accessible even without visitor auth
     const isExempt =
       pathname === "/visitor-login" ||
       pathname.startsWith("/api/") ||
@@ -73,11 +72,8 @@ export async function middleware(request) {
 
     if (!isExempt) {
       const visitorCookie = getCookie(cookieHeader, VISITOR_COOKIE);
-      // The visitor cookie stores the password itself (hashed comparison happens below)
-      // Simple constant-time comparison via HMAC sign trick isn't available here, so
-      // we do a straightforward string comparison of the raw cookie value.
-      // The cookie value is set server-side, so spoofing requires knowing the password anyway.
-      const granted = visitorCookie === visitorPassword;
+      // Cookie holds an HMAC-signed token ("visitor.<hex>"), never the raw password.
+      const granted = visitorCookie ? await verifyEdge(visitorCookie, secret, "visitor") : false;
       if (!granted) {
         const loginUrl = new URL("/visitor-login", request.url);
         loginUrl.searchParams.set("next", pathname);
