@@ -6,17 +6,25 @@ import { getTranslations } from "../../../lib/i18n.js";
 
 export const dynamic = "force-dynamic";
 
-export default async function AdminItemsPage() {
+const PAGE_SIZE = 50;
+
+export default async function AdminItemsPage({ searchParams }) {
   await initDb();
-  const items = getAllItemsWithStats();
+  const allItems = getAllItemsWithStats();
   const locale = await getLocale();
   const t = getTranslations(locale);
+
+  const params = await searchParams;
+  const page = Math.max(1, parseInt(params?.page ?? "1", 10) || 1);
+  const totalPages = Math.max(1, Math.ceil(allItems.length / PAGE_SIZE));
+  const currentPage = Math.min(page, totalPages);
+  const items = allItems.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
 
   return (
     <div>
       <div className="d-flex align-items-center mb-4 gap-3">
         <h1 className="h3 mb-0">{t("admin.items.title")}</h1>
-        <span className="badge bg-secondary">{items.length}</span>
+        <span className="badge bg-secondary">{allItems.length}</span>
       </div>
 
       {items.length === 0 ? (
@@ -86,6 +94,24 @@ export default async function AdminItemsPage() {
             </tbody>
           </table>
         </div>
+      )}
+
+      {totalPages > 1 && (
+        <nav className="mt-4 d-flex justify-content-center">
+          <ul className="pagination">
+            <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
+              <Link className="page-link" href={`?page=${currentPage - 1}`}>&laquo;</Link>
+            </li>
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
+              <li key={p} className={`page-item ${p === currentPage ? "active" : ""}`}>
+                <Link className="page-link" href={`?page=${p}`}>{p}</Link>
+              </li>
+            ))}
+            <li className={`page-item ${currentPage === totalPages ? "disabled" : ""}`}>
+              <Link className="page-link" href={`?page=${currentPage + 1}`}>&raquo;</Link>
+            </li>
+          </ul>
+        </nav>
       )}
     </div>
   );
