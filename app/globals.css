@@ -1,0 +1,64 @@
+:root {
+  --bg: #ffffff;
+  --text: #212529;
+  --card-bg: #ffffff;
+  --muted: #6c757d;
+  --border: #dee2e6;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1a1a1a;
+    --text: #e9ecef;
+    --card-bg: #242424;
+    --muted: #adb5bd;
+    --border: #495057;
+    /* Override Bootstrap's muted text token so .text-muted is visible on dark cards */
+    --bs-secondary-color: #adb5bd;
+  }
+
+  body {
+    background-color: var(--bg) !important;
+    color: var(--text) !important;
+  }
+
+  .card {
+    background-color: var(--card-bg) !important;
+    border-color: var(--border) !important;
+    color: var(--text) !important;
+  }
+
+  .table {
+    --bs-table-bg: var(--card-bg);
+    --bs-table-color: var(--text);
+    --bs-table-border-color: var(--border);
+  }
+
+  .table-light {
+    --bs-table-bg: #2a2a2a;
+    --bs-table-color: var(--text);
+  }
+
+  .form-control, .form-select {
+    background-color: #2a2a2a;
+    color: var(--text);
+    border-color: var(--border);
+  }
+
+  .navbar-dark .navbar-nav .nav-link {
+    color: rgba(255, 255, 255, 0.75);
+  }
+
+  .bg-light {
+    background-color: #2a2a2a !important;
+  }
+}
+
+.hover-card {
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.hover-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
