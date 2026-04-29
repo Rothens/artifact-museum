@@ -1,6 +1,8 @@
 # Artifact Museum
 
-A Next.js companion app for [artifact-logger](../artifact-logger). Displays a curated, publicly browsable collection of logged artifacts — accessible by QR/barcode scan or by browsing. All data is stored locally in a SQLite file; no external services required.
+A Next.js companion app for [Artifact Logger](https://github.com/Rothens/artifact-logger). Displays a curated, publicly browsable collection of logged artifacts — accessible by QR/barcode scan or by browsing. All data is stored locally in a SQLite file; no external services required.
+
+> **Artifact Logger** — log artifacts on the go → [try it live](https://rothens.github.io/artifact-logger/) · [repo](https://github.com/Rothens/artifact-logger)
 
 ## What it does
 
