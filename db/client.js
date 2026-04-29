@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync, existsSync, mkdirSync } from "fs";
+import { readFileSync, writeFileSync, renameSync, existsSync, mkdirSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { createRequire } from "module";
@@ -38,11 +38,29 @@ async function init() {
   return _db;
 }
 
-/** Persist in-memory database to disk. Call after every write. */
+const PERSIST_RETRIES = 3;
+
+/**
+ * Persist in-memory database to disk atomically.
+ * Writes to a temp file first, then renames over the target — so a crash
+ * mid-write never leaves a corrupt or truncated database file.
+ * Retries up to PERSIST_RETRIES times on transient I/O errors.
+ */
 export function persist() {
   if (!_db) return;
   const data = _db.export();
-  writeFileSync(DB_PATH, Buffer.from(data));
+  const tmp = DB_PATH + ".tmp";
+  let lastErr;
+  for (let i = 0; i < PERSIST_RETRIES; i++) {
+    try {
+      writeFileSync(tmp, Buffer.from(data));
+      renameSync(tmp, DB_PATH);
+      return;
+    } catch (err) {
+      lastErr = err;
+    }
+  }
+  throw new Error(`persist() failed after ${PERSIST_RETRIES} attempts: ${lastErr?.message}`);
 }
 
 /**
