@@ -11,10 +11,10 @@ export default async function AdminDashboard() {
   const publicCount = items.filter((i) => i.is_public).length;
   const totalViews = items.reduce((sum, i) => sum + (i.view_count || 0), 0);
 
-  async function importData(payload) {
+  async function importData(payload, rawSizeBytes) {
     "use server";
     await initDb();
-    return upsertAll(payload);
+    return upsertAll(payload, { rawSizeBytes });
   }
 
   return (

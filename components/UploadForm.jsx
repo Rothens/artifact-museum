@@ -19,7 +19,7 @@ export default function UploadForm({ onImport }) {
     try {
       const text = await file.text();
       const payload = JSON.parse(text);
-      const imported = await onImport(payload);
+      const imported = await onImport(payload, file.size);
       setResult(imported);
       setStatus("success");
       if (inputRef.current) inputRef.current.value = "";
