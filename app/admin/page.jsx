@@ -41,9 +41,16 @@ export default async function AdminDashboard() {
 
       <h2 className="h5 mb-3">Import from Artifact Logger</h2>
       <UploadForm onImport={importData} />
-
       <p className="text-muted small mt-2">
         Upload the JSON export from the offline PWA. Re-importing is safe — existing visibility settings will not be overwritten.
+      </p>
+
+      <h2 className="h5 mb-3 mt-5">Backup</h2>
+      <a href="/api/export" download className="btn btn-outline-secondary">
+        <i className="bi bi-download me-2"></i>Export database as JSON
+      </a>
+      <p className="text-muted small mt-2">
+        Downloads all codes and items as a JSON file. Keep regular backups — this is the only way to recover data if the server is lost.
       </p>
     </div>
   );
