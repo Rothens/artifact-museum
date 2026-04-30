@@ -1,0 +1,259 @@
+{
+  "appVersion": 1,
+  "exportedAt": "2025-04-15T09:30:00.000Z",
+  "photosIncluded": false,
+  "codeDefinitions": [
+    {
+      "id": "cd-sand-01",
+      "codeType": "qr_code",
+      "codeValue": "SAND-HAKONE-ASHIYU-2025",
+      "codeKey": "qr_code:SAND-HAKONE-ASHIYU-2025",
+      "mode": "unique_object",
+      "name": "Hakone – Ashiyu foot bath sand",
+      "category": "sand",
+      "notes": "From the volcanic sand at the Hakone open-air foot bath near Gora station."
+    },
+    {
+      "id": "cd-sand-02",
+      "codeType": "qr_code",
+      "codeValue": "SAND-KAMAKURA-BEACH-2025",
+      "codeKey": "qr_code:SAND-KAMAKURA-BEACH-2025",
+      "mode": "unique_object",
+      "name": "Kamakura – Yuigahama beach sand",
+      "category": "sand",
+      "notes": "Fine grey-brown sand from Yuigahama beach, collected near the Great Buddha side trail."
+    },
+    {
+      "id": "cd-sand-03",
+      "codeType": "qr_code",
+      "codeValue": "SAND-INOKASHIRA-2025",
+      "codeKey": "qr_code:SAND-INOKASHIRA-2025",
+      "mode": "unique_object",
+      "name": "Inokashira Park – pond bank",
+      "category": "sand",
+      "notes": "Not really sand — more of a fine grit from the pond bank. Still counts."
+    },
+    {
+      "id": "cd-onigiri-tuna",
+      "codeType": "ean_13",
+      "codeValue": "4901234567890",
+      "codeKey": "ean_13:4901234567890",
+      "mode": "repeatable_product",
+      "name": "7-Eleven – Tuna mayo onigiri",
+      "category": "snack",
+      "notes": "The classic. Triangular, nori wrap-style."
+    },
+    {
+      "id": "cd-onigiri-salmon",
+      "codeType": "ean_13",
+      "codeValue": "4901234567891",
+      "codeKey": "ean_13:4901234567891",
+      "mode": "repeatable_product",
+      "name": "Lawson – Salmon onigiri",
+      "category": "snack",
+      "notes": "Lawson's salmon tends to have a slightly sweeter seasoning than 7-Eleven's."
+    },
+    {
+      "id": "cd-matcha-kit-kat",
+      "codeType": "ean_13",
+      "codeValue": "4902370019162",
+      "codeKey": "ean_13:4902370019162",
+      "mode": "repeatable_product",
+      "name": "Kit Kat – Matcha (mini)",
+      "category": "snack",
+      "notes": "Bought at Don Quijote. The regional matcha variety, not the standard nationwide one."
+    },
+    {
+      "id": "cd-canned-coffee",
+      "codeType": "ean_13",
+      "codeValue": "4901085176153",
+      "codeKey": "ean_13:4901085176153",
+      "mode": "repeatable_product",
+      "name": "Georgia – European Blend (canned)",
+      "category": "drink",
+      "notes": "The vending machine staple. Slightly sweet, slightly wrong, totally correct."
+    },
+    {
+      "id": "cd-ramune",
+      "codeType": "ean_13",
+      "codeValue": "4904001519015",
+      "codeKey": "ean_13:4904001519015",
+      "mode": "repeatable_product",
+      "name": "Ramune – Original lemon",
+      "category": "drink",
+      "notes": "Glass bottle with the marble stopper. Bought at Asakusa street stall."
+    },
+    {
+      "id": "cd-furoshiki",
+      "codeType": "qr_code",
+      "codeValue": "SOUVENIR-FUROSHIKI-KYOTO-2025",
+      "codeKey": "qr_code:SOUVENIR-FUROSHIKI-KYOTO-2025",
+      "mode": "unique_object",
+      "name": "Kyoto – Indigo furoshiki",
+      "category": "souvenir",
+      "notes": "Indigo-dyed cotton wrapping cloth from a craft shop in Nishiki Market."
+    },
+    {
+      "id": "cd-maneki",
+      "codeType": "qr_code",
+      "codeValue": "SOUVENIR-MANEKI-ASAKUSA-2025",
+      "codeKey": "qr_code:SOUVENIR-MANEKI-ASAKUSA-2025",
+      "mode": "unique_object",
+      "name": "Asakusa – Porcelain maneki-neko",
+      "category": "souvenir",
+      "notes": "Small white lucky cat, gold left paw raised. From the Nakamise shopping street."
+    },
+    {
+      "id": "cd-shinkansen",
+      "codeType": "qr_code",
+      "codeValue": "TICKET-SHINKANSEN-TYO-KYO-2025",
+      "codeKey": "qr_code:TICKET-SHINKANSEN-TYO-KYO-2025",
+      "mode": "unique_object",
+      "name": "Shinkansen – Tokyo → Kyoto (Nozomi)",
+      "category": "ticket",
+      "notes": "Reserved seat, car 7. 2h 15min journey."
+    },
+    {
+      "id": "cd-ghibli",
+      "codeType": "qr_code",
+      "codeValue": "TICKET-GHIBLI-MUSEUM-2025",
+      "codeKey": "qr_code:TICKET-GHIBLI-MUSEUM-2025",
+      "mode": "unique_object",
+      "name": "Ghibli Museum entry ticket",
+      "category": "ticket",
+      "notes": "Purchased online, timed entry 10:00. The ticket is a strip of 35mm film."
+    }
+  ],
+  "itemRecords": [
+    {
+      "id": "item-sand-01",
+      "codeDefinitionId": "cd-sand-01",
+      "label": "Hakone volcanic sand – vial #1",
+      "notes": "The sand has a slightly reddish-brown tint from the volcanic mineral content. Collected from the public foot bath area, not the restricted zones.",
+      "collectedAt": "2025-03-22T11:15:00.000Z",
+      "location": { "lat": 35.2333, "lng": 139.0255, "accuracy": 12 },
+      "photo": { "name": "hakone-sand-vial.jpg", "width": 1280, "height": 960, "compressedSize": 187432 },
+      "metadata": { "price": "0", "currency": "JPY", "sourceShop": "", "recipient": "", "consumed": false, "gifted": false }
+    },
+    {
+      "id": "item-sand-02",
+      "codeDefinitionId": "cd-sand-02",
+      "label": "Kamakura beach sand – vial #1",
+      "notes": "Collected at low tide. The beach is quite busy but there is a quieter stretch east of the lifeguard station. Vial sealed with wax.",
+      "collectedAt": "2025-03-24T14:40:00.000Z",
+      "location": { "lat": 35.3117, "lng": 139.5502, "accuracy": 8 },
+      "photo": { "name": "kamakura-sand.jpg", "width": 1280, "height": 960, "compressedSize": 204851 },
+      "metadata": { "price": "0", "currency": "JPY", "sourceShop": "", "recipient": "", "consumed": false, "gifted": false }
+    },
+    {
+      "id": "item-sand-03",
+      "codeDefinitionId": "cd-sand-03",
+      "label": "Inokashira Park – pond bank grit",
+      "notes": "Borderline entry for the collection. Very fine, almost silt-like. Still sealed.",
+      "collectedAt": "2025-03-28T09:55:00.000Z",
+      "location": { "lat": 35.7018, "lng": 139.5715, "accuracy": 15 },
+      "photo": null,
+      "metadata": { "price": "0", "currency": "JPY", "sourceShop": "", "recipient": "", "consumed": false, "gifted": false }
+    },
+    {
+      "id": "item-onigiri-01",
+      "codeDefinitionId": "cd-onigiri-tuna",
+      "label": null,
+      "notes": "First one of the trip. Eaten on the Narita Express.",
+      "collectedAt": "2025-03-20T08:30:00.000Z",
+      "location": null,
+      "photo": { "name": "onigiri-tuna-01.jpg", "width": 1280, "height": 960, "compressedSize": 143210 },
+      "metadata": { "price": "157", "currency": "JPY", "sourceShop": "7-Eleven Narita Terminal 2", "recipient": "", "consumed": true, "gifted": false }
+    },
+    {
+      "id": "item-onigiri-02",
+      "codeDefinitionId": "cd-onigiri-tuna",
+      "label": null,
+      "notes": "Post-Senso-ji, eaten on a bench in Asakusa. Somehow better than the first.",
+      "collectedAt": "2025-03-21T13:10:00.000Z",
+      "location": { "lat": 35.7148, "lng": 139.7967, "accuracy": 20 },
+      "photo": null,
+      "metadata": { "price": "157", "currency": "JPY", "sourceShop": "7-Eleven Asakusa", "recipient": "", "consumed": true, "gifted": false }
+    },
+    {
+      "id": "item-onigiri-03",
+      "codeDefinitionId": "cd-onigiri-salmon",
+      "label": null,
+      "notes": "Tried Lawson's version for comparison purposes. Research, essentially.",
+      "collectedAt": "2025-03-23T12:05:00.000Z",
+      "location": null,
+      "photo": null,
+      "metadata": { "price": "160", "currency": "JPY", "sourceShop": "Lawson Shinjuku", "recipient": "", "consumed": true, "gifted": false }
+    },
+    {
+      "id": "item-kitkat-01",
+      "codeDefinitionId": "cd-matcha-kit-kat",
+      "label": null,
+      "notes": "Bought a bag of 15. Brought most home as gifts.",
+      "collectedAt": "2025-03-25T17:20:00.000Z",
+      "location": null,
+      "photo": { "name": "matcha-kitkat.jpg", "width": 1280, "height": 960, "compressedSize": 165000 },
+      "metadata": { "price": "880", "currency": "JPY", "sourceShop": "Don Quijote Shibuya", "recipient": "family", "consumed": false, "gifted": true }
+    },
+    {
+      "id": "item-coffee-01",
+      "codeDefinitionId": "cd-canned-coffee",
+      "label": null,
+      "notes": "From a vending machine outside Shinjuku Gyoen. Still warm.",
+      "collectedAt": "2025-03-26T08:45:00.000Z",
+      "location": { "lat": 35.6852, "lng": 139.7100, "accuracy": 18 },
+      "photo": null,
+      "metadata": { "price": "130", "currency": "JPY", "sourceShop": "Vending machine, Shinjuku Gyoen entrance", "recipient": "", "consumed": true, "gifted": false }
+    },
+    {
+      "id": "item-ramune-01",
+      "codeDefinitionId": "cd-ramune",
+      "label": null,
+      "notes": "Spent way too long figuring out how to push the marble in. Worth it.",
+      "collectedAt": "2025-03-21T15:30:00.000Z",
+      "location": { "lat": 35.7148, "lng": 139.7967, "accuracy": 10 },
+      "photo": { "name": "ramune-asakusa.jpg", "width": 1280, "height": 960, "compressedSize": 172340 },
+      "metadata": { "price": "350", "currency": "JPY", "sourceShop": "Street stall, Nakamise-dori, Asakusa", "recipient": "", "consumed": true, "gifted": false }
+    },
+    {
+      "id": "item-furoshiki-01",
+      "codeDefinitionId": "cd-furoshiki",
+      "label": "Indigo furoshiki – medium",
+      "notes": "70x70cm. The indigo dye is natural, the shop owner demonstrated three different wrapping styles.",
+      "collectedAt": "2025-03-27T14:15:00.000Z",
+      "location": { "lat": 35.0042, "lng": 135.7697, "accuracy": 25 },
+      "photo": { "name": "furoshiki-kyoto.jpg", "width": 1280, "height": 960, "compressedSize": 198000 },
+      "metadata": { "price": "2800", "currency": "JPY", "sourceShop": "Craft shop, Nishiki Market, Kyoto", "recipient": "", "consumed": false, "gifted": false }
+    },
+    {
+      "id": "item-maneki-01",
+      "codeDefinitionId": "cd-maneki",
+      "label": "Maneki-neko – for the desk",
+      "notes": "Left paw raised = invites people/luck. Right paw = invites money. Got the people one.",
+      "collectedAt": "2025-03-21T16:00:00.000Z",
+      "location": { "lat": 35.7148, "lng": 139.7966, "accuracy": 10 },
+      "photo": { "name": "maneki-neko.jpg", "width": 1280, "height": 960, "compressedSize": 155000 },
+      "metadata": { "price": "1200", "currency": "JPY", "sourceShop": "Nakamise-dori, Asakusa", "recipient": "", "consumed": false, "gifted": false }
+    },
+    {
+      "id": "item-shinkansen-01",
+      "codeDefinitionId": "cd-shinkansen",
+      "label": "Nozomi 17 – Tokyo → Kyoto",
+      "notes": "Mount Fuji visible from the right side around Shin-Fuji station, roughly 40 minutes in. Clear day, perfect view.",
+      "collectedAt": "2025-03-26T14:33:00.000Z",
+      "location": null,
+      "photo": { "name": "fuji-from-shinkansen.jpg", "width": 1280, "height": 960, "compressedSize": 241000 },
+      "metadata": { "price": "13320", "currency": "JPY", "sourceShop": "JR Ticket Office, Tokyo Station", "recipient": "", "consumed": false, "gifted": false }
+    },
+    {
+      "id": "item-ghibli-01",
+      "codeDefinitionId": "cd-ghibli",
+      "label": "Ghibli Museum – 10:00 slot",
+      "notes": "The ticket itself is a strip of 35mm film from an actual Ghibli production. Mine had a frame from My Neighbour Totoro. No photography inside, but the robot soldier on the rooftop is fair game.",
+      "collectedAt": "2025-03-29T10:00:00.000Z",
+      "location": { "lat": 35.6961, "lng": 139.5704, "accuracy": 10 },
+      "photo": { "name": "ghibli-ticket.jpg", "width": 1280, "height": 960, "compressedSize": 168000 },
+      "metadata": { "price": "1000", "currency": "JPY", "sourceShop": "Online (Lawson ticketing)", "recipient": "", "consumed": false, "gifted": false }
+    }
+  ]
+}
