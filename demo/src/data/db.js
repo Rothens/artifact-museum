@@ -19,8 +19,7 @@ function buildPublicItem(itemRecord, codeDefinition) {
     // In the demo all fields are shown — mirror show_* = true behaviour
     notes: itemRecord.notes || null,
     photo_name: itemRecord.photo?.name || null,
-    // No actual photos in the slim export — photo_data_url stays null
-    photo_data_url: null,
+    photo_data_url: itemRecord.photo?.dataUrl || null,
     meta_price: itemRecord.metadata?.price || null,
     meta_currency: itemRecord.metadata?.currency || null,
     meta_source_shop: itemRecord.metadata?.sourceShop || null,

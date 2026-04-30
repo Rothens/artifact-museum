@@ -26,17 +26,13 @@ export default function ItemPage() {
         <span className="badge bg-secondary text-capitalize">{item.category}</span>
       </div>
 
-      {/* Photo placeholder — no actual data URL in the slim export */}
-      {item.photo_name && (
-        <div
-          className="rounded mb-4 w-100 d-flex align-items-center justify-content-center bg-light text-muted border"
-          style={{ height: 240 }}
-        >
-          <div className="text-center">
-            <i className="bi bi-image fs-1 d-block mb-2"></i>
-            <span className="small">{item.photo_name}</span>
-          </div>
-        </div>
+      {item.photo_data_url && (
+        <img
+          src={item.photo_data_url}
+          alt={name}
+          className="rounded mb-4 w-100"
+          style={{ maxHeight: 420, objectFit: 'cover' }}
+        />
       )}
 
       <h1 className="h3 fw-bold mb-1">{name}</h1>

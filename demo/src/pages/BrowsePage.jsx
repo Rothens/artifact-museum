@@ -35,22 +35,27 @@ export default function BrowsePage() {
                 to={`/item/${item.id}`}
                 className="card text-decoration-none h-100 shadow-sm hover-card"
               >
-                <div
-                  className="card-img-top d-flex align-items-center justify-content-center bg-light text-muted"
-                  style={{ height: 160 }}
-                >
-                  <i className={`bi ${icon} fs-1`}></i>
-                </div>
+                {item.photo_data_url ? (
+                  <img
+                    src={item.photo_data_url}
+                    alt={name}
+                    className="card-img-top"
+                    style={{ height: 160, objectFit: 'cover' }}
+                    loading="lazy"
+                  />
+                ) : (
+                  <div
+                    className="card-img-top d-flex align-items-center justify-content-center bg-light text-muted"
+                    style={{ height: 160 }}
+                  >
+                    <i className={`bi ${icon} fs-1`}></i>
+                  </div>
+                )}
                 <div className="card-body">
                   <p className="card-title mb-1 fw-semibold">{name}</p>
                   <span className="badge bg-light text-secondary text-capitalize border">
                     {item.category}
                   </span>
-                  {item.photo_name && (
-                    <span className="badge bg-light text-secondary border ms-1">
-                      <i className="bi bi-image me-1"></i>photo
-                    </span>
-                  )}
                 </div>
               </Link>
             </div>
