@@ -31,6 +31,12 @@ export default async function AdminLayout({ children }) {
         </Link>
         <div className="navbar-nav ms-auto gap-2 align-items-center">
           <Link href="/admin/items" className="nav-link">{t("nav.items")}</Link>
+          <Link href="/admin/analytics" className="nav-link">
+            <i className="bi bi-bar-chart me-1"></i>Analytics
+          </Link>
+          <Link href="/admin/tokens" className="nav-link">
+            <i className="bi bi-key me-1"></i>Tokens
+          </Link>
           <Link href="/" className="nav-link" target="_blank" rel="noopener noreferrer">
             {t("nav.public")} <i className="bi bi-box-arrow-up-right small"></i>
           </Link>

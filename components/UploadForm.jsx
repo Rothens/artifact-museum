@@ -46,7 +46,13 @@ export default function UploadForm({ onImport }) {
       {status === "success" && result && (
         <div className="alert alert-success py-2 small mb-3">
           <i className="bi bi-check-circle me-2"></i>
-          Imported {result.codes} code definitions and {result.items} item records.
+          <strong>Import complete.</strong>
+          <div className="mt-1">
+            Codes: <strong>{result.codesNew} new</strong>, {result.codesUpdated} updated
+          </div>
+          <div>
+            Items: <strong>{result.itemsNew} new</strong>, {result.itemsUpdated} updated
+          </div>
         </div>
       )}
 

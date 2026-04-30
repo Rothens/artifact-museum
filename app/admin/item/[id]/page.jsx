@@ -48,11 +48,13 @@ export default async function AdminItemEditPage({ params }) {
 
     if (photoRaw === "__clear__") {
       dataUpdate.photo_data_url = null;
+      dataUpdate.photo_name = null;
       dataUpdate.photo_width = null;
       dataUpdate.photo_height = null;
       dataUpdate.photo_size = null;
     } else if (photoRaw && photoRaw.startsWith("data:")) {
       dataUpdate.photo_data_url = photoRaw;
+      dataUpdate.photo_name = formData.get("photo_name") || null;
       dataUpdate.photo_width = Number(formData.get("photo_width")) || null;
       dataUpdate.photo_height = Number(formData.get("photo_height")) || null;
       dataUpdate.photo_size = Number(formData.get("photo_size")) || null;
@@ -186,6 +188,7 @@ export default async function AdminItemEditPage({ params }) {
                   <label className="form-label">{t("admin.edit.data.photo")}</label>
                   <PhotoUpload
                     currentDataUrl={item.photo_data_url}
+                    currentPhotoName={item.photo_name}
                     labels={{ clear: t("admin.edit.data.photo.clear") }}
                   />
                   <div className="form-text">{t("admin.edit.data.photo.hint")}</div>

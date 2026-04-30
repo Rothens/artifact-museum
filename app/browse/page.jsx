@@ -57,6 +57,7 @@ export default async function BrowsePage() {
                     alt={name}
                     className="card-img-top"
                     style={{ height: 160, objectFit: "cover" }}
+                    loading="lazy"
                   />
                 ) : (
                   <div

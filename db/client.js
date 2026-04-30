@@ -35,7 +35,36 @@ async function init() {
   _db.run(migration);
   _db.run("PRAGMA foreign_keys = ON");
 
+  applyColumnMigrations(_db);
+
   return _db;
+}
+
+/**
+ * Run ALTER TABLE migrations that can't be expressed as CREATE IF NOT EXISTS.
+ * Each entry is guarded by a row in the _migrations table so it only runs once.
+ */
+function applyColumnMigrations(db) {
+  const pending = [
+    { name: "001_photo_name", sql: "ALTER TABLE item_records ADD COLUMN photo_name TEXT" },
+    { name: "002_rate_limits", sql: null }, // table created via main migration, no ALTER needed
+  ];
+
+  for (const { name, sql } of pending) {
+    if (!sql) continue;
+    const stmt = db.prepare("SELECT name FROM _migrations WHERE name = ?");
+    stmt.bind([name]);
+    const already = stmt.step();
+    stmt.free();
+    if (already) continue;
+
+    try {
+      db.run(sql);
+    } catch {
+      // Column may already exist on a freshly created DB — ignore duplicate column errors
+    }
+    db.run("INSERT OR IGNORE INTO _migrations (name) VALUES (?)", [name]);
+  }
 }
 
 const PERSIST_RETRIES = 3;

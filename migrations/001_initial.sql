@@ -22,6 +22,7 @@ CREATE TABLE IF NOT EXISTS item_records (
   location_lng        REAL,
   location_accuracy   REAL,
   photo_data_url      TEXT,
+  photo_name          TEXT,
   photo_width         INTEGER,
   photo_height        INTEGER,
   photo_size          INTEGER,
@@ -62,3 +63,27 @@ CREATE TABLE IF NOT EXISTS page_views (
 CREATE INDEX IF NOT EXISTS idx_views_item ON page_views(item_id);
 -- Allows time-range analytics queries without a full table scan
 CREATE INDEX IF NOT EXISTS idx_views_viewed_at ON page_views(viewed_at);
+
+CREATE TABLE IF NOT EXISTS rate_limits (
+  key         TEXT PRIMARY KEY,
+  count       INTEGER NOT NULL DEFAULT 0,
+  reset_at    INTEGER NOT NULL  -- Unix ms timestamp
+);
+
+CREATE INDEX IF NOT EXISTS idx_rate_limits_reset ON rate_limits(reset_at);
+
+CREATE TABLE IF NOT EXISTS api_tokens (
+  id          TEXT PRIMARY KEY,       -- random UUID, returned once on creation
+  name        TEXT NOT NULL,          -- user-supplied label e.g. "My Phone"
+  token_hash  TEXT NOT NULL UNIQUE,   -- SHA-256(raw_token) — raw token never stored
+  created_at  TEXT NOT NULL DEFAULT (datetime('now')),
+  last_used_at TEXT                   -- updated on each successful API call
+);
+
+-- Add photo_name to existing databases that predate this column
+-- sql.js does not support IF NOT EXISTS on ALTER TABLE, so we use a
+-- separate migration table to track applied changes.
+CREATE TABLE IF NOT EXISTS _migrations (name TEXT PRIMARY KEY);
+
+INSERT OR IGNORE INTO _migrations (name) VALUES ('001_photo_name');
+-- The actual ALTER is handled at runtime in db/client.js (see applyColumnMigrations).

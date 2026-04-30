@@ -52,6 +52,27 @@ export default async function AdminDashboard() {
       <p className="text-muted small mt-2">
         Downloads all codes and items as a JSON file. Keep regular backups — this is the only way to recover data if the server is lost.
       </p>
+
+      <div className="card mt-5 border-0 shadow-sm overflow-hidden">
+        <div className="card-body d-flex align-items-center gap-4 py-4" style={{ background: 'linear-gradient(135deg, #ff5f5f11 0%, #ff914d22 100%)' }}>
+          <div className="fs-1 flex-shrink-0" aria-hidden="true">☕</div>
+          <div className="flex-grow-1">
+            <h5 className="mb-1 fw-bold">Support this project</h5>
+            <p className="text-muted small mb-0">
+              Artifact Museum and Artifact Logger are free and open source. If they are useful to you, a coffee is always appreciated!
+            </p>
+          </div>
+          <a
+            href="https://ko-fi.com/Nipponkalandor"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-sm flex-shrink-0 fw-semibold"
+            style={{ background: '#ff5f5f', color: '#fff', whiteSpace: 'nowrap' }}
+          >
+            Buy me a coffee
+          </a>
+        </div>
+      </div>
     </div>
   );
 }
