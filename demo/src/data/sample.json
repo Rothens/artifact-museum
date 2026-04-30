@@ -36,8 +36,8 @@
     {
       "id": "cd-onigiri-tuna",
       "codeType": "ean_13",
-      "codeValue": "4901234567890",
-      "codeKey": "ean_13:4901234567890",
+      "codeValue": "4901234567894",
+      "codeKey": "ean_13:4901234567894",
       "mode": "repeatable_product",
       "name": "7-Eleven – Tuna mayo onigiri",
       "category": "snack",
@@ -46,8 +46,8 @@
     {
       "id": "cd-onigiri-salmon",
       "codeType": "ean_13",
-      "codeValue": "4901234567891",
-      "codeKey": "ean_13:4901234567891",
+      "codeValue": "4901234567801",
+      "codeKey": "ean_13:4901234567801",
       "mode": "repeatable_product",
       "name": "Lawson – Salmon onigiri",
       "category": "snack",
@@ -76,8 +76,8 @@
     {
       "id": "cd-ramune",
       "codeType": "ean_13",
-      "codeValue": "4904001519015",
-      "codeKey": "ean_13:4904001519015",
+      "codeValue": "4904001519010",
+      "codeKey": "ean_13:4904001519010",
       "mode": "repeatable_product",
       "name": "Ramune – Original lemon",
       "category": "drink",
