@@ -12,8 +12,10 @@ A Next.js companion app for [Artifact Logger](https://github.com/Rothens/artifac
 - **Guests** visit the site, scan a code to jump directly to an item, or browse the full collection
 - **Analytics dashboard** — view total visits, referrer breakdown (scan / browse / direct), daily visit chart, and top-10 most-viewed items
 - **API tokens** — generate tokens in the admin panel and use them to sync directly from artifact-logger without manual JSON export
+- **Trips** — group items by date range, view them on an OpenStreetMap with a chronological polyline and animated timeline scrubber
 - **Optional visitor password** — set `VISITOR_PASSWORD` in `.env.local` to prevent unauthenticated public access
 - **Language switcher** — UI available in Hungarian (default) and English
+- **Photo storage modes** — store photos in SQLite (simple, self-contained) or on the filesystem (fast, with WebP thumbnails)
 
 ## Requirements
 
@@ -36,7 +38,36 @@ npm run dev        # http://localhost:3000
 | `ADMIN_PASSWORD` | Yes | Password for the `/admin` area |
 | `COOKIE_SECRET` | Yes | 32+ character random string used to sign auth cookies |
 | `VISITOR_PASSWORD` | No | If set, all public pages require this password before entry |
+| `DEFAULT_LOCALE` | No | Default UI language — `hu` (default) or `en` |
+| `PHOTO_STORAGE` | No | Photo backend — `db` (default) or `fs` (see below) |
+| `CORS_ORIGIN` | No | Allowed origin for the sync API (e.g. `https://logger.example.com`) |
 | `DB_PATH` | No | Path to the SQLite file (default: `./data/museum.db`) |
+
+## Photo storage
+
+### `PHOTO_STORAGE=db` (default)
+
+Photos are stored as base64 data URLs inside the SQLite file. Simple and fully self-contained — `data/museum.db` is your only backup artifact. Works well for small collections; gets slow and memory-hungry with large numbers of high-resolution photos because every write exports the entire DB.
+
+### `PHOTO_STORAGE=fs`
+
+Photos are written to `data/photos/` as individual files. A 400 px wide WebP thumbnail is generated alongside each full-size image using `sharp` (already bundled with Next.js). The DB stores only a `/api/photos/<itemId>` reference.
+
+**Benefits:** fast writes, small DB, thumbnails for the browse grid, easy rsync backup.
+
+**Switching an existing instance from `db` to `fs`:**
+
+1. Stop the app (or at least ensure nothing is writing to the DB)
+2. Set `PHOTO_STORAGE=fs` in `.env.local`
+3. Run the one-time migration script:
+   ```bash
+   node scripts/migrate-photos-to-fs.mjs
+   ```
+4. Start the app
+
+The script is safe to re-run — already-migrated rows are skipped. It prints per-item progress and exits non-zero if any item failed.
+
+**Backup in `fs` mode:** The `/api/export` endpoint reads photos from disk and embeds them as data URLs, so the exported JSON is always fully self-contained and importable on any instance.
 
 ## Commands
 
@@ -84,7 +115,8 @@ SQLite (data/museum.db)
 | Table | Purpose |
 |---|---|
 | `code_definitions` | Scanned code metadata (type, value, name, category) |
-| `item_records` | Artifact instances — visibility flags, photo, photo_name, metadata, notes |
+| `item_records` | Artifact instances — visibility flags, photo, metadata, notes, trip override |
+| `trips` | Named date ranges that group items; resolved by `collected_at` or explicit override |
 | `page_views` | One row per guest visit, with referrer (scan / browse / direct) |
 | `api_tokens` | Hashed API tokens for direct sync from artifact-logger |
 | `rate_limits` | SQLite-backed brute-force protection for login and API endpoints |
@@ -119,29 +151,38 @@ Each item has a master `is_public` flag plus per-field flags (`show_photo`, `sho
 ```
 app/
   admin/
-    item/[id]/page.jsx   — Edit item: display text, photo, metadata, visibility
-    items/page.jsx       — Items list with search, filter, pagination
-    analytics/page.jsx   — Visit stats, daily chart, top items
-    tokens/page.jsx      — Create and revoke API tokens
-    layout.jsx           — Admin nav (Items / Analytics / Tokens / Import)
-  item/[id]/page.jsx     — Public item detail
-  browse/page.jsx        — Public collection grid
-  scan/                  — QR/barcode scanner (client component)
-  visitor-login/         — Optional visitor password gate
+    item/[id]/page.jsx        — Edit item: display text, photo, metadata, visibility, trip
+    items/page.jsx            — Items list with search, filter, pagination
+    trips/page.jsx            — Trips list + create form
+    trips/[id]/page.jsx       — Edit/delete trip, view matched items
+    analytics/page.jsx        — Visit stats, daily chart, top items
+    tokens/page.jsx           — Create and revoke API tokens
+    layout.jsx                — Admin nav
+  item/[id]/page.jsx          — Public item detail (with trip badge)
+  trip/[id]/page.jsx          — Public trip page: OSM map + timeline + item list
+  browse/page.jsx             — Public collection grid + trips strip
+  scan/                       — QR/barcode scanner (client component)
+  visitor-login/              — Optional visitor password gate
   api/
-    sync/status/route.js      — Bearer auth health check
-    sync/push/route.js        — Full data push (codes + items, no photos)
-    sync/photo/[itemId]/route.js — Single photo upload
+    sync/status/route.js              — Bearer auth health check
+    sync/push/route.js                — Full data push (codes + items, no photos)
+    sync/photo/[itemId]/route.js      — Single photo upload
+    photos/[itemId]/route.js          — Serve filesystem-stored photos (?thumb=1 for thumbnail)
+    export/route.js                   — Full DB backup as JSON
 lib/
   i18n.js               — EN/HU translations
   visibility.js         — filterPublicFields()
+  photos.js             — Photo storage abstraction (db / fs modes, thumbnail generation)
   import.js             — JSON export parser + upsert
   auth.js               — HMAC sign/verify helpers
   rateLimit.js          — SQLite-backed rate limiter
   db/
     items.js            — Item CRUD helpers
+    trips.js            — Trip CRUD + resolution queries
     tokens.js           — API token create/verify/revoke
     analytics.js        — View aggregation queries
+scripts/
+  migrate-photos-to-fs.mjs  — One-time migration: DB photos → filesystem
 db/
   client.js             — sql.js singleton (async init, sync ops, persist)
 migrations/

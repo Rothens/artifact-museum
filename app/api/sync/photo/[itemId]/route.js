@@ -47,7 +47,7 @@ export async function POST(request, { params }) {
     return NextResponse.json({ error: "Photo too large (max ~6 MB)" }, { status: 413, headers: corsHeaders() });
   }
 
-  updateItemData(itemId, {
+  await updateItemData(itemId, {
     photo_data_url: dataUrl,
     photo_name: name ?? null,
     photo_width: width ?? null,

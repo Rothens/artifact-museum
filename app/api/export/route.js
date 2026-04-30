@@ -4,6 +4,7 @@ import { isAuthenticated } from "../../../lib/auth.js";
 import { initDb } from "../../../lib/initDb.js";
 import { getAllCodes } from "../../../lib/db/codes.js";
 import { getAllItemRecords } from "../../../lib/db/items.js";
+import { readPhotoAsDataUrl } from "../../../lib/photos.js";
 
 export const dynamic = "force-dynamic";
 
@@ -42,7 +43,10 @@ export async function GET() {
       accuracy: item.location_accuracy,
     } : null,
     photo: item.photo_data_url ? {
-      dataUrl: item.photo_data_url,
+      // If stored as a file path, read it back as a data URL for a self-contained export
+      dataUrl: item.photo_data_url.startsWith("/api/photos/")
+        ? readPhotoAsDataUrl(item.id)
+        : item.photo_data_url,
       name: item.photo_name,
       width: item.photo_width,
       height: item.photo_height,

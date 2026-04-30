@@ -70,7 +70,7 @@ export default async function AdminItemEditPage({ params }) {
     dataUpdate.meta_consumed = formData.get("meta_consumed") === "on";
     dataUpdate.meta_gifted = formData.get("meta_gifted") === "on";
 
-    updateItemData(item.id, dataUpdate);
+    await updateItemData(item.id, dataUpdate);
 
     const tripOverride = formData.get("trip_id") || null;
     setItemTripOverride(item.id, tripOverride);

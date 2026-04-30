@@ -14,7 +14,7 @@ export default async function AdminDashboard() {
   async function importData(payload, rawSizeBytes) {
     "use server";
     await initDb();
-    return upsertAll(payload, { rawSizeBytes });
+    return await upsertAll(payload, { rawSizeBytes });
   }
 
   return (

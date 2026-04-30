@@ -31,7 +31,7 @@ export async function POST(request) {
   const contentLength = Number(request.headers.get("content-length") || 0);
 
   try {
-    const result = upsertAll(payload, { rawSizeBytes: contentLength });
+    const result = await upsertAll(payload, { rawSizeBytes: contentLength });
     return NextResponse.json({ ok: true, ...result }, { headers: corsHeaders() });
   } catch (err) {
     return NextResponse.json({ error: err.message }, { status: 422, headers: corsHeaders() });
