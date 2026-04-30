@@ -14,7 +14,7 @@ export async function GET(request) {
 
   const raw = extractBearerToken(request.headers.get("authorization"));
   if (!raw || !verifyToken(raw)) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 }, { headers: corsHeaders() });
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401, headers: corsHeaders() });
   }
 
   return NextResponse.json({ ok: true }, { headers: corsHeaders() });

@@ -18,14 +18,14 @@ export async function POST(request) {
 
   const raw = extractBearerToken(request.headers.get("authorization"));
   if (!raw || !verifyToken(raw)) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 }, { headers: corsHeaders() });
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401, headers: corsHeaders() });
   }
 
   let payload;
   try {
     payload = await request.json();
   } catch {
-    return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 }, { headers: corsHeaders() });
+    return NextResponse.json({ error: "Invalid JSON body" }, { status: 400, headers: corsHeaders() });
   }
 
   const contentLength = Number(request.headers.get("content-length") || 0);
@@ -34,6 +34,6 @@ export async function POST(request) {
     const result = upsertAll(payload, { rawSizeBytes: contentLength });
     return NextResponse.json({ ok: true, ...result }, { headers: corsHeaders() });
   } catch (err) {
-    return NextResponse.json({ error: err.message }, { status: 422 }, { headers: corsHeaders() });
+    return NextResponse.json({ error: err.message }, { status: 422, headers: corsHeaders() });
   }
 }

@@ -4,6 +4,7 @@ import { initDb } from "../../../../lib/initDb.js";
 import { getItemById, updateItemVisibility, updateItemData } from "../../../../lib/db/items.js";
 import { getCodeById } from "../../../../lib/db/codes.js";
 import { getViewBreakdownForItem } from "../../../../lib/db/analytics.js";
+import { getAllTrips, getTripForItem, setItemTripOverride } from "../../../../lib/db/trips.js";
 import { getLocale } from "../../../../lib/locale.js";
 import { getTranslations } from "../../../../lib/i18n.js";
 import PhotoUpload from "../../../../components/PhotoUpload.jsx";
@@ -18,6 +19,8 @@ export default async function AdminItemEditPage({ params }) {
   const code = getCodeById(item.code_definition_id);
   const viewBreakdown = getViewBreakdownForItem(item.id);
   const totalViews = viewBreakdown.reduce((s, r) => s + r.count, 0);
+  const allTrips = getAllTrips();
+  const resolvedTrip = getTripForItem(item.id);
 
   const locale = await getLocale();
   const t = getTranslations(locale);
@@ -68,6 +71,9 @@ export default async function AdminItemEditPage({ params }) {
     dataUpdate.meta_gifted = formData.get("meta_gifted") === "on";
 
     updateItemData(item.id, dataUpdate);
+
+    const tripOverride = formData.get("trip_id") || null;
+    setItemTripOverride(item.id, tripOverride);
 
     redirect("/admin/items");
   }
@@ -258,6 +264,32 @@ export default async function AdminItemEditPage({ params }) {
                     </label>
                   </div>
                 </div>
+              </div>
+            </div>
+
+            {/* Trip assignment */}
+            <div className="card shadow-sm mb-3">
+              <div className="card-body">
+                <h6 className="card-title mb-3">{t("admin.edit.trip")}</h6>
+                {resolvedTrip && (
+                  <p className="small text-muted mb-2">
+                    {t("admin.edit.trip.resolved")}{" "}
+                    <Link href={`/admin/trips/${resolvedTrip.id}`} className="fw-semibold">
+                      {resolvedTrip.name}
+                    </Link>
+                    {item.trip_id
+                      ? null
+                      : <span className="ms-1 text-muted">({t("admin.edit.trip.auto")})</span>}
+                  </p>
+                )}
+                <select name="trip_id" className="form-select form-select-sm" defaultValue={item.trip_id ?? ""}>
+                  <option value="">{resolvedTrip && !item.trip_id ? t("admin.edit.trip.auto") : t("admin.edit.trip.none")}</option>
+                  {allTrips.map((trip) => (
+                    <option key={trip.id} value={trip.id}>
+                      {trip.name || t("trip.unnamed")} ({trip.date_start} – {trip.date_end})
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
 

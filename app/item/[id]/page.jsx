@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { initDb } from "../../../lib/initDb.js";
 import { getItemById } from "../../../lib/db/items.js";
+import { getTripForItem } from "../../../lib/db/trips.js";
 import { filterPublicFields } from "../../../lib/visibility.js";
 import ViewTracker from "../../../components/ViewTracker.jsx";
 import { getLocale } from "../../../lib/locale.js";
@@ -15,6 +16,7 @@ export default async function ItemPage({ params }) {
   if (!raw || !raw.is_public) notFound();
 
   const item = filterPublicFields(raw);
+  const trip = getTripForItem(raw.id);
   const locale = await getLocale();
   const t = getTranslations(locale);
 
@@ -28,6 +30,16 @@ export default async function ItemPage({ params }) {
         </Link>
         <span className="badge bg-secondary text-capitalize">{item.category}</span>
       </div>
+
+      {trip && trip.is_public ? (
+        <Link
+          href={`/trip/${trip.id}`}
+          className="badge bg-primary text-decoration-none d-inline-flex align-items-center gap-1 mb-3"
+        >
+          <i className="bi bi-map"></i>
+          {t("item.trip")} {trip.name}
+        </Link>
+      ) : null}
 
       {item.photo_data_url && (
         // eslint-disable-next-line @next/next/no-img-element

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { initDb } from "../../lib/initDb.js";
 import { getAllPublicItems } from "../../lib/db/items.js";
+import { getAllTrips } from "../../lib/db/trips.js";
 import { getLocale } from "../../lib/locale.js";
 import { getTranslations } from "../../lib/i18n.js";
 
@@ -20,6 +21,7 @@ export const dynamic = "force-dynamic";
 export default async function BrowsePage() {
   await initDb();
   const items = getAllPublicItems();
+  const publicTrips = getAllTrips().filter((tr) => tr.is_public);
   const locale = await getLocale();
   const t = getTranslations(locale);
 
@@ -42,6 +44,27 @@ export default async function BrowsePage() {
         </Link>
         <h1 className="h4 mb-0">{t("browse.title")} <span className="badge bg-secondary fw-normal">{items.length}</span></h1>
       </div>
+
+      {publicTrips.length > 0 && (
+        <div className="mb-4">
+          <h2 className="h6 text-muted text-uppercase mb-3">
+            <i className="bi bi-map me-1"></i>{t("nav.trips")}
+          </h2>
+          <div className="d-flex flex-wrap gap-2">
+            {publicTrips.map((trip) => (
+              <Link
+                key={trip.id}
+                href={`/trip/${trip.id}`}
+                className="btn btn-outline-primary btn-sm"
+              >
+                <i className="bi bi-map me-1"></i>
+                {trip.name || t("trip.unnamed")}
+                <span className="ms-2 badge bg-primary">{trip.item_count}</span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
 
       <div className="row g-3">
         {items.map((item) => {

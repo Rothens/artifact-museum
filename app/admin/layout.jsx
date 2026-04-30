@@ -31,6 +31,7 @@ export default async function AdminLayout({ children }) {
         </Link>
         <div className="navbar-nav ms-auto gap-2 align-items-center">
           <Link href="/admin/items" className="nav-link">{t("nav.items")}</Link>
+          <Link href="/admin/trips" className="nav-link">{t("nav.trips")}</Link>
           <Link href="/admin/analytics" className="nav-link">
             <i className="bi bi-bar-chart me-1"></i>Analytics
           </Link>

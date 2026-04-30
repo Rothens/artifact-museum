@@ -47,7 +47,19 @@ async function init() {
 function applyColumnMigrations(db) {
   const pending = [
     { name: "001_photo_name", sql: "ALTER TABLE item_records ADD COLUMN photo_name TEXT" },
+    { name: "001_photo_name_fix", sql: "ALTER TABLE item_records ADD COLUMN photo_name TEXT" }, // re-runs for DBs where 001_photo_name was pre-seeded without the column being applied
     { name: "002_rate_limits", sql: null }, // table created via main migration, no ALTER needed
+    { name: "003_trips_table", sql: `CREATE TABLE IF NOT EXISTS trips (
+      id          TEXT PRIMARY KEY,
+      name        TEXT NOT NULL DEFAULT '',
+      description TEXT NOT NULL DEFAULT '',
+      date_start  TEXT NOT NULL,
+      date_end    TEXT NOT NULL,
+      created_at  TEXT NOT NULL DEFAULT (datetime('now'))
+    )` },
+    { name: "004_trips_index", sql: "CREATE INDEX IF NOT EXISTS idx_trips_dates ON trips(date_start, date_end)" },
+    { name: "005_item_trip_id", sql: "ALTER TABLE item_records ADD COLUMN trip_id TEXT REFERENCES trips(id)" },
+    { name: "006_item_trip_index", sql: "CREATE INDEX IF NOT EXISTS idx_items_trip ON item_records(trip_id)" },
   ];
 
   for (const { name, sql } of pending) {
