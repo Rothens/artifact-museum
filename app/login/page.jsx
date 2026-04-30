@@ -3,6 +3,7 @@ import { headers } from "next/headers";
 import { verifyPassword, makeSignedValue } from "../../lib/auth.js";
 import { cookies } from "next/headers";
 import { checkRateLimit, recordFailedAttempt, clearAttempts } from "../../lib/rateLimit.js";
+import { initDb } from "../../lib/initDb.js";
 
 export default async function LoginPage({ searchParams }) {
   const next = (await searchParams).next || "/admin";
@@ -11,6 +12,7 @@ export default async function LoginPage({ searchParams }) {
 
   async function login(formData) {
     "use server";
+    await initDb();
     const headerStore = await headers();
     const ip =
       headerStore.get("x-forwarded-for")?.split(",")[0].trim() ||
